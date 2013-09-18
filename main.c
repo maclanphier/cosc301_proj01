@@ -1,7 +1,9 @@
 /*
  *
- * author name, date, and other info here
- *
+ * Brett Rojec
+ * Mac Lanphier
+ * 9/17/13
+ * 
  */
 
 #include <stdio.h>
