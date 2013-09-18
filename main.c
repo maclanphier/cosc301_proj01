@@ -11,8 +11,41 @@
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
+#include <strings.h>
+#include <ctype.h>
 
 #include "list.h"
+
+
+
+
+char **tokenify(const char *str) {
+	const char* sep = " \t\n";
+	char* tmp;
+	char* word;
+	char* s = strdup(str);
+	int charCount = 0;
+	int pointCount = 1;
+	for(word = strtok_r(s,sep,&tmp); word != NULL; word = strtok_r(NULL,sep,&tmp)){
+		charCount += strlen(word);
+		charCount ++;
+		pointCount ++;
+	}
+	free(s);
+	char** pointArray = (char**) malloc(pointCount*sizeof(char*));
+	int pointInd = 0;
+	s = strdup(str);
+	for(word = strtok_r(s,sep,&tmp); word != NULL; word = strtok_r(NULL,sep,&tmp)){
+		pointArray[pointInd] = strdup(word);
+		pointInd ++;
+	}
+	pointArray[pointInd] = NULL;
+	free(s);
+	return pointArray;
+
+
+}
+
 
 void usage(char *program) {
     fprintf(stderr, "usage: %s [<datafile>]\n", program);

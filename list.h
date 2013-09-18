@@ -2,7 +2,7 @@
 #define __LIST_H__
 
 /* your list data structure declarations */
-
+char **tokenify(const char *);
 
 /* your function declarations associated with the list */
 
