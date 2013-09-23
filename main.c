@@ -86,8 +86,6 @@ int main(int argc, char **argv) {
 
 
 
-
-
     fclose(datafile);
     return 0;
 }
