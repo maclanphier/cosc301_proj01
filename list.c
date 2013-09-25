@@ -8,13 +8,29 @@ struct node {
 };
 
 void list_insert(const int val, struct node **head) {
-     struct node *newnode = malloc(sizeof(struct node));
- 	//newnode-> next = NULL;
-     newnode->value = val;
-     newnode->next = *head;
-     *head = newnode;
-	//printf("Start of the list is now: %s \n", (*head)->name);
+	struct node *newnode = (struct node*)malloc(sizeof(struct node));
+	newnode->value = val;
+ 	struct node* cur = *head;
+	if(cur==NULL || cur->value > val){
+		*head = newnode;
+		newnode->next = cur;
+	}else{
+		while(cur->next!=NULL){
+			if(val < cur->next->value){
+				newnode->next = cur->next;
+				cur->next = newnode;
+				return;
+			}
+			cur= cur->next;
+		}
+		cur->next = newnode;
+		newnode->next == NULL;
+	}
+	
+	
+	printf("Start of the list is now: %d \n", (*head)->value);
 }
+
 
 void list_clear(struct node *list) {
     while (list != NULL) {
@@ -31,7 +47,7 @@ void list_print(struct node *head) {
 		printf("%d\n",head->value);
 		head = head->next;	
 	}  
-	printf("NULL\n"); 
+	printf("END\n"); 
 }
 
 void list_print_matches(const int val, const struct node* head){
