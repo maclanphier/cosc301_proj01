@@ -145,8 +145,9 @@ int main(int argc, char **argv) {
 
 	struct rusage usage;
 	getrusage(RUSAGE_SELF, &usage);
-	printf("System time: %06lfs\n",usage.ru_stime.tv_usec);
-	printf("User time: %06lfs\n",usage.ru_utime.tv_usec);
+	printf("System time: %d.%06ds\n",usage.ru_stime.tv_sec,usage.ru_stime.tv_usec);
+	printf("User time: %d.%06ds\n",usage.ru_utime.tv_secusage.ru_utime.tv_usec);
+	
     fclose(datafile);
 
     return 0;
