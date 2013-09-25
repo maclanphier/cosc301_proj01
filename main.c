@@ -81,7 +81,7 @@ struct node** reader(FILE* datafile){		//UNFINISHED
 		int* list = tokenify(data);
 		int i = 1;
 		for(;i<=list[0];i++){
-			list_insert(int_list,list[i]);
+			list_insert(list[i],int_list);
 		}
 		fgets(data,255,datafile);
 	}
@@ -102,8 +102,8 @@ void usage(char *program) {
 int main(int argc, char **argv) {
     FILE *datafile = NULL;
 	//testing here
-	char str[] = "1 45 281 bob oblah's 25th law blog";
-	int* token = tokenify(str);
+	//char str[] = "1 45 281 bob oblah's 25th law blog";
+	//int* token = tokenify(str);
 
 
 
@@ -136,6 +136,9 @@ int main(int argc, char **argv) {
      * you should be able to just read from datafile regardless 
      * whether it's stdin or a "real" file.
      */
+
+	struct node** intList = reader(datafile);
+	list_print(*intList);
 
 
 	
