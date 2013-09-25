@@ -19,7 +19,7 @@
 
 
 
-char **tokenify(const char *str) {
+int *tokenify(const char *str) { 		//FINISHED! 	RUNS PROPERLY!
 	const char* sep = " \t\n";
 	char* tmp;
 	char* word;
@@ -41,8 +41,10 @@ char **tokenify(const char *str) {
 		}
 	}
 	free(s);
-	int** pointArray = (int**) malloc(pointCount*sizeof(int*));
-	int pointInd = 0;
+	int* pointArray = (int*) malloc(pointCount*sizeof(int));
+	pointArray[0] = (int)malloc(sizeof(int));
+	int pointInd = 1;
+	int intCount = 0;
 	s = strdup(str);
 	for(word = strtok_r(s,sep,&tmp); word != NULL; word = strtok_r(NULL,sep,&tmp)){
 		int i;		
@@ -53,17 +55,40 @@ char **tokenify(const char *str) {
 			}
 		}
 		if(test == 1){ //If word is an integer, add it to the list
+			//printf("\nFound an int!");
 			int num = atoi(word);
-			pointArray[pointInd] = (int*) malloc(sizeof(int));
+			pointArray[pointInd] = (int) malloc(sizeof(int));
+			pointArray[pointInd] = num;
 			pointInd ++;
+			intCount ++;
 		}
 	}
-	pointArray[pointInd] = NULL;
+	pointArray[0] = intCount;
 	free(s);
 	return pointArray;
 
 
 }
+
+
+struct node** reader(FILE* datafile){		//UNFINISHED
+	char* data = NULL;
+	fgets(data, 255, datafile);
+	struct node** int_list = (struct node**)malloc(sizeof(struct node*));
+	int_list[0] = NULL;
+	//int nodeCount = 0;
+	while(data != NULL){
+		int* list = tokenify(data);
+		int i = 1;
+		for(;i<=list[0];i++){
+			list_insert(int_list,list[i]);
+		}
+	}
+}
+
+
+
+
 
 
 void usage(char *program) {
@@ -74,6 +99,13 @@ void usage(char *program) {
 
 int main(int argc, char **argv) {
     FILE *datafile = NULL;
+	//testing here
+	char str[] = "1 45 281 bob oblah's 25th law blog";
+	int* token = tokenify(str);
+
+
+
+	//end test
 
     /* find out how we got invoked and deal with it */
     switch (argc) {
@@ -103,13 +135,18 @@ int main(int argc, char **argv) {
      * whether it's stdin or a "real" file.
      */
 
-	char* data;
-	while(data = fgets(data, 255, datafile)!=NULL){
+	//char* data;
+	//while(data = fgets(data, 255, datafile)!=NULL){
 		
+	//}
+
+
+    //int fclose(datafile);
+	printf("\n");
+	int i = 1;
+	for(;i<=token[0];i++){
+		printf("%d\n",token[i]);
 	}
-
-
-    fclose(datafile);
     return 0;
 }
 
