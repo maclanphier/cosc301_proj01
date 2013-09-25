@@ -13,6 +13,8 @@
 #include <errno.h>
 #include <strings.h>
 #include <ctype.h>
+#include <sys/time.h>
+#include <sys/resource.h>
 
 #include "list.h"
 
@@ -84,12 +86,12 @@ int main(int argc, char **argv) {
      * whether it's stdin or a "real" file.
      */
 
-	char* data;
-	while(data = fgets(data, 255, datafile)!=NULL){
-		
-	}
+	
 
-
+	struct rusage usage;
+	getrusage(RUSAGE_SELF, &usage);
+	printf("System time: %06lfs\n",usage.ru_stime.tv_usec);
+	printf("User time: %06lfs\n",usage.ru_utime.tv_usec);
     fclose(datafile);
     return 0;
 }
