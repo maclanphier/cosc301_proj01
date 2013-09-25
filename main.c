@@ -84,6 +84,10 @@ int main(int argc, char **argv) {
      * whether it's stdin or a "real" file.
      */
 
+	char* data;
+	while(data = fgets(data, 255, datafile)!=NULL){
+		
+	}
 
 
     fclose(datafile);
