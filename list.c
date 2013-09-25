@@ -24,7 +24,7 @@ void list_insert(const int val, struct node **head) {
 			cur= cur->next;
 		}
 		cur->next = newnode;
-		newnode->next == NULL;
+		newnode->next = NULL;
 	}
 	
 	

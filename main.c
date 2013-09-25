@@ -24,11 +24,11 @@
 int *tokenify(const char *str) { 		//FINISHED! 	RUNS PROPERLY!
 	const char* sep = " \t\n";
 	char* tmp;
-	char* word;
 	char* s = strdup(str);
+	char* word= strtok_r(s,sep,&tmp);
 	//int charCount = 0;
 	int pointCount = 1;
-	for(word = strtok_r(s,sep,&tmp); word != NULL; word = strtok_r(NULL,sep,&tmp)){
+	for(; word != NULL; word = strtok_r(NULL,sep,&tmp)){
 		int i;		
 		int test = 1;
 		for(i = 0; i < strlen(word); i++){ //Check if word is an integer
@@ -48,16 +48,23 @@ int *tokenify(const char *str) { 		//FINISHED! 	RUNS PROPERLY!
 	int pointInd = 1;
 	int intCount = 0;
 	s = strdup(str);
-	for(word = strtok_r(s,sep,&tmp); word != NULL; word = strtok_r(NULL,sep,&tmp)){
-		int i;		
+	word = strtok_r(s,sep,&tmp);
+	for(; word != NULL && strcmp(word,"#") != 0; word = strtok_r(NULL,sep,&tmp)){
+		int i = 0;		
 		int test = 1;
-		for(i = 0; i < strlen(word); i++){ //Check if word is an integer
+		int isNeg;
+		if(word[0]=='-'){
+			isNeg=0;
+			i++;
+		}
+		for(; i < strlen(word); i++){ //Check if word is an integer
 			if(isdigit(word[i]) == 0) {
 				test = 0;
+				//printf("%s\n",word);
 			}
 		}
 		if(test == 1){ //If word is an integer, add it to the list
-			//printf("\nFound an int!");
+			//printf("\n%s",word);
 			int num = atoi(word);
 			pointArray[pointInd] = (int) malloc(sizeof(int));
 			pointArray[pointInd] = num;
@@ -67,29 +74,40 @@ int *tokenify(const char *str) { 		//FINISHED! 	RUNS PROPERLY!
 	}
 	pointArray[0] = intCount;
 	free(s);
+	//printf("\nWe make at least one array");
 	return pointArray;
 }
 
 
 struct node** reader(FILE* datafile){		//UNFINISHED
-	char* data = NULL;
-	fgets(data, 255, datafile);
+	char* data = (char*)malloc(sizeof(char)*255);
+	//fgets(data, 255, datafile);
 	struct node** int_list = (struct node**)malloc(sizeof(struct node*));
 	int_list[0] = NULL;
 	//int nodeCount = 0;
-	while(data != NULL){
+	//printf("\nGot here!");
+	//printf("\n");
+	while(fgets(data, 255, datafile) != NULL){
+		//printf("\nGot here!");
+		//printf("\n");
 		int* list = tokenify(data);
 		int i = 1;
 		for(;i<=list[0];i++){
 			list_insert(list[i],int_list);
 		}
-		fgets(data,255,datafile);
+		//fgets(data,255,datafile);
 	}
+	//printf("\nWe manage to make a list");
 	return int_list;
 }
 
 
-
+void reader2(FILE* datafile){
+	char* data = (char*)malloc(sizeof(char)*255);
+	while(fgets(data, 255, datafile)!=NULL){
+		printf(data);	
+	}
+}
 
 
 
@@ -136,12 +154,13 @@ int main(int argc, char **argv) {
      * you should be able to just read from datafile regardless 
      * whether it's stdin or a "real" file.
      */
-
+	printf("\nMac's stuff is called, and fails");
+	printf("\n");
 	struct node** intList = reader(datafile);
 	list_print(*intList);
 
-
-	
+	//reader2(datafile);
+		
 
 	struct rusage usage;
 	getrusage(RUSAGE_SELF, &usage);
