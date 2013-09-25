@@ -26,20 +26,39 @@ char **tokenify(const char *str) {
 	char* tmp;
 	char* word;
 	char* s = strdup(str);
-	int charCount = 0;
+	//int charCount = 0;
 	int pointCount = 1;
 	for(word = strtok_r(s,sep,&tmp); word != NULL; word = strtok_r(NULL,sep,&tmp)){
-		charCount += strlen(word);
-		charCount ++;
-		pointCount ++;
+		int i;		
+		int test = 1;
+		for(i = 0; i < strlen(word); i++){ //Check if word is an integer
+			if(isdigit(word[i]) == 0) {
+				test = 0;
+			}
+		}
+		//charCount += strlen(word);
+		//charCount ++;
+		if(test == 1){ //If word is an integer, make room for it
+			pointCount ++;
+		}
 	}
 	free(s);
-	char** pointArray = (char**) malloc(pointCount*sizeof(char*));
+	int** pointArray = (int**) malloc(pointCount*sizeof(int*));
 	int pointInd = 0;
 	s = strdup(str);
 	for(word = strtok_r(s,sep,&tmp); word != NULL; word = strtok_r(NULL,sep,&tmp)){
-		pointArray[pointInd] = strdup(word);
-		pointInd ++;
+		int i;		
+		int test = 1;
+		for(i = 0; i < strlen(word); i++){ //Check if word is an integer
+			if(isdigit(word[i]) == 0) {
+				test = 0;
+			}
+		}
+		if(test == 1){ //If word is an integer, add it to the list
+			int num = atoi(word);
+			pointArray[pointInd] = (int*) malloc(sizeof(int));
+			pointInd ++;
+		}
 	}
 	pointArray[pointInd] = NULL;
 	free(s);
