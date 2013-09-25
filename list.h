@@ -8,7 +8,7 @@ struct node{
 	struct node* next;
 };
 
-char **tokenify(const char *);
+int *tokenify(const char *);
 
 
 /* your function declarations associated with the list */
