@@ -66,8 +66,6 @@ int *tokenify(const char *str) { 		//FINISHED! 	RUNS PROPERLY!
 	pointArray[0] = intCount;
 	free(s);
 	return pointArray;
-
-
 }
 
 
@@ -83,7 +81,9 @@ struct node** reader(FILE* datafile){		//UNFINISHED
 		for(;i<=list[0];i++){
 			list_insert(int_list,list[i]);
 		}
+		fgets(data,255,datafile);
 	}
+	return int_list;
 }
 
 
